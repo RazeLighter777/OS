@@ -2,9 +2,9 @@ CC=g++
 QEMU_PARAMS = -no-shutdown -no-reboot -d exec
 
 
-all: os.bin
+all: build/os.bin
 
-os.bin: kernel bootloader
+build/os.bin: clean kernel bootloader
 	cat boot/boot.bin kernel/kernel.bin > $@
 
 kernel:
@@ -15,8 +15,19 @@ bootloader:
 	echo BUILDING BOOTLOADER
 	cd boot && $(MAKE)
 
-run: os.bin
+run: build/os.bin
 	qemu-system-i386 $(QEMU_PARAMS) -fda $<
 clean:
 	rm -rf *.o *.bin
 
+iso: build/os.bin
+	genisoimage -follow-links -b os.bin  \
+	-o build/os.iso \
+	-c boot.cat \
+	-no-emul-boot \
+	-boot-load-size 4 \
+	-boot-info-table \
+	-eltorito-alt-boot \
+	-V 'OS' \
+	-R -J -v -T \
+	build

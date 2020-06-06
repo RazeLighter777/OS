@@ -1,4 +1,5 @@
 ASM=nasm
+LD=ld
 
 all: boot.bin
 
