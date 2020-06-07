@@ -2,4 +2,5 @@
 *.o
 *.dism
 *.iso
+*.out
 build/*
