@@ -7,13 +7,13 @@ all: kernel.bin
 
 #The binary is the linkage of the kernel.c and kernelentry.asm file
 kernel.bin: kernelentry.o kernel.o
-	$(LD) -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
+	$(LD) -m elf_x86_64 -o $@ -Ttext 0x1000 $^ --oformat binary
 
 kernelentry.o: kernelentry.asm
-	$(ASM) $< -f elf -o $@
+	$(ASM) $< -f elf64 -o $@
 
 kernel.o: kernel.c
-	$(CC) --target=i386-elf -ffreestanding -c $< -o $@
+	$(CC) --target=x86_64-elf -ffreestanding -c $< -o $@
 
 
 

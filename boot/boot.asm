@@ -11,11 +11,13 @@ mov ah, 0x0e ; tty mode
 	call switch_to_pm
 	jmp $
 
+%include "error.asm"
 %include "print.asm"
 %include "disk.asm"
 %include "32bitgdt.asm"
 %include "32bitvga.asm"
 %include "32bitswitch.asm"
+%include "64bitswitch.asm"
 
 [bits 16]
 loadkernel:
@@ -49,5 +51,3 @@ LOADKERNELMSG:
 times 510-($-$$) db 0
 ; Magic number
 dw 0xaa55 
-
-
